@@ -82,9 +82,13 @@ class CsvToJson:
 
     def get_selected_columns(self) -> None:
         selected_columns: list[str] = [
-            col.strip() for col in input("Enter selected columns: ").split(",")
+            col.strip()
+            for col in input("Enter selected columns (or '__all__'): ").split(",")
         ]
-        self.selected_columns = selected_columns
+        if selected_columns[0] == "__all__":
+            self.selected_columns = self.columns
+        else:
+            self.selected_columns = selected_columns
 
     def filter_dataset(self) -> None:
         dataset, selected_columns = self.dataset, self.selected_columns
@@ -124,4 +128,3 @@ class CsvToJson:
 if __name__ == "__main__":
     convert: CsvToJson = CsvToJson(input_file())
     result = convert.main()
-    cons.print(result)
